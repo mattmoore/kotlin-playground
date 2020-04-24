@@ -1,0 +1,30 @@
+# This workflow will build the project and run tests.
+
+name: Build
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  setup-build-publish-deploy:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Cache Gradle so it doesn't have to download for every run
+    - name: Gradle Cache
+      uses: actions/cache@v1
+      env:
+        cache-name: gradle
+      with:
+        path: ~/.gradle
+        key: gradle
+
+    - name: Test
+      run: |
+        gradle test
