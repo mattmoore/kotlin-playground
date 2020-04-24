@@ -4,4 +4,4 @@
 
 Trying various things with Kotlin, using Kotest to demonstrate functionality.
 
-1. [Arrow](https://typelevel.org/cats/) [specs](src/test/kotlin/playground/arrow/)
+1. [Arrow](https://arrow-kt.io /) [specs](src/test/kotlin/playground/arrow/)
