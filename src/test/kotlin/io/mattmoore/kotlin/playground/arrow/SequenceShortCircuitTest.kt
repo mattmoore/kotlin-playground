@@ -1,4 +1,4 @@
-package io.mattmoore.kotlin.playground
+package io.mattmoore.kotlin.playground.arrow
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
