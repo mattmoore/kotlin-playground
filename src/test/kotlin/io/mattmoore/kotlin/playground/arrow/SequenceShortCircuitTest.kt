@@ -2,6 +2,8 @@ package io.mattmoore.kotlin.playground.arrow
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.assertions.arrow.either.shouldBeLeft
+import io.kotest.assertions.arrow.either.shouldBeRight
 
 import arrow.core.*
 import arrow.core.extensions.either.applicative.applicative
@@ -21,17 +23,10 @@ class SequenceShortCircuitTest : StringSpec({
     // We're defining a function to load all the files, but short-circuit when one of them fails.
     // Sequence applies to a list of effects to be run.
     // This is different from traverse, which applies an effectful function to a list of pure values.
-    fun loadShortCircuit(files: List<Either<AppError.FileFailed, String>>) =
-            files.sequence(Either.applicative())
+    fun loadShortCircuit(files: List<Either<AppError.FileFailed, String>>): Either<AppError.FileFailed, List<String>> =
+            files.sequence(Either.applicative()).fix().map { it.fix() }
 
     "sequence is useful when you have a List<Either<E, A>> instead of a List<A>. in other words, a list of effects" {
-        val expected = Right(listOf(
-                "I'm the first part.\n",
-                "I'm the second part.\n",
-                "I'm the third part.\n",
-                "I'm the fourth part.\n"
-        ))
-
         // The list of effects we're going to "sequence"
         val effectList = listOf(
                 readFile("data/part1.txt"),
@@ -40,9 +35,14 @@ class SequenceShortCircuitTest : StringSpec({
                 readFile("data/part4.txt")
         )
 
-        val result = loadShortCircuit(effectList)
-
-        result shouldBe expected
+        loadShortCircuit(effectList).shouldBeRight { value ->
+            value shouldBe listOf(
+                    "I'm the first part.\n",
+                    "I'm the second part.\n",
+                    "I'm the third part.\n",
+                    "I'm the fourth part.\n"
+            )
+        }
     }
 
     "let's try the same thing, but see what happens when an error occurs" {
@@ -53,14 +53,8 @@ class SequenceShortCircuitTest : StringSpec({
                 readFile("data/part4.txt")
         )
 
-        val expected = Left(
-                AppError.FileFailed(
-                        "data/monkeywrench.txt (No such file or directory)"
-                )
-        )
-
-        val result = loadShortCircuit(effectList)
-
-        result shouldBe expected
+        loadShortCircuit(effectList).shouldBeLeft { exception ->
+            exception shouldBe AppError.FileFailed("data/monkeywrench.txt (No such file or directory)")
+        }
     }
 })
