@@ -11,11 +11,8 @@ import arrow.core.extensions.list.traverse.traverse
 
 import java.io.File
 
-sealed class AppError {
-    data class FileFailed(val file: String) : AppError()
-}
-
 class TraverseShortCircuitTest : StringSpec({
+    // We can define a function `readFile` that returns an Either<E, A>
     fun readFile(file: String): Either<AppError.FileFailed, String> =
             try {
                 Right(File(file).readText())
