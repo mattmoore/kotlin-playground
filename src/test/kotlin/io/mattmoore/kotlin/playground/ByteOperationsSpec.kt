@@ -1,4 +1,4 @@
-package io.mattmoore.kotlin.standard
+package io.mattmoore.kotlin.playground
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
