@@ -12,9 +12,11 @@ class ComprehensionSpec : DescribeSpec({
   describe("comprehension") {
     describe("with Option") {
       fun compare(foo: Option<Date>, bar: Option<Date>) = Option.fx<Boolean> {
-        if (foo is None) return@fx false
-        if (foo is Some && bar is None) return@fx true
-        !foo > !bar
+        return@fx when {
+          foo is None -> false
+          foo is Some && bar is None -> true
+          else -> !foo > !bar
+        }
       }
 
       context("when foo is None, bar is None") {
