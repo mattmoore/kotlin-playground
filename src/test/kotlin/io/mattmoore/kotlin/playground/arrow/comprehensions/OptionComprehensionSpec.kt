@@ -1,4 +1,4 @@
-package io.mattmoore.kotlin.playground.arrow
+package io.mattmoore.kotlin.playground.arrow.comprehensions
 
 import arrow.core.None
 import arrow.core.Option
@@ -8,7 +8,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import java.util.*
 
-class ComprehensionSpec : DescribeSpec({
+class OptionComprehensionSpec : DescribeSpec({
   describe("comprehension") {
     describe("with Option") {
       fun compare(foo: Option<Date>, bar: Option<Date>) = Option.fx<Boolean> {
@@ -43,8 +43,8 @@ class ComprehensionSpec : DescribeSpec({
         }
       }
 
-      context("when both are Some and foo > bar") {
-        it("should return false") {
+      context("when both are Some, foo > bar") {
+        it("should return true") {
           compare(
             foo = Some(Date(2020, 6, 4)),
             bar = Some(Date(2020, 6, 3))
@@ -52,7 +52,7 @@ class ComprehensionSpec : DescribeSpec({
         }
       }
 
-      context("when both are Some and foo < bar") {
+      context("when both are Some, foo < bar") {
         it("should return false") {
           compare(
             foo = Some(Date(2020, 6, 3)),
