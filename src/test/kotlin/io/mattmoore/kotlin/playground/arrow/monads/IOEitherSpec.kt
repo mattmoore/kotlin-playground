@@ -2,10 +2,7 @@ package io.mattmoore.kotlin.playground.arrow.monads
 
 import arrow.core.Either
 import arrow.core.Left
-import arrow.core.None
-import arrow.core.Option
 import arrow.core.Right
-import arrow.core.Some
 import arrow.fx.IO
 import arrow.fx.handleError
 import io.kotest.core.spec.style.DescribeSpec
