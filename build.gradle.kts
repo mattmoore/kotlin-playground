@@ -2,12 +2,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.3.61"
+    id("org.jetbrains.kotlin.jvm") version "1.4.10"
 
     // Apply the application plugin to add support for building a CLI application.
     application
 
-    kotlin("kapt") version "1.3.61"
+    kotlin("kapt") version "1.4.10"
 }
 
 repositories {
@@ -39,7 +39,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-arrow-jvm:4.0.5")
 
     // Arrow
-    val arrowVersion = "0.10.5"
+    val arrowVersion = "0.11.0"
     implementation("io.arrow-kt:arrow-core:$arrowVersion")
     implementation("io.arrow-kt:arrow-syntax:$arrowVersion")
     implementation("io.arrow-kt:arrow-fx:$arrowVersion")
